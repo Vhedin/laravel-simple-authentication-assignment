@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\UserSaved;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SaveUserAddressesListener
 {
@@ -19,9 +17,9 @@ class SaveUserAddressesListener
     /**
      * Handle the event.
      */
-    public function handle(UserSaved $event) : void
+    public function handle(UserSaved $event): void
     {
-        $user      = $event->user;
+        $user = $event->user;
         $addresses = $event->addresses;
         $user->addresses()->delete();
         $user->addresses()->createMany($addresses);

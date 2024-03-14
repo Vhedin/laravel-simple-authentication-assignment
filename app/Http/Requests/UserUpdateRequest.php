@@ -9,7 +9,7 @@ class UserUpdateRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -19,16 +19,16 @@ class UserUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'name'                => 'required|string|max:255',
-            'email'               => 'required|string|email|max:255|unique:users,email,' . $this->user,
-            'password'            => 'nullable|string|min:8|confirmed',
-            'avatar'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'addresses'           => 'required|array',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$this->user,
+            'password' => 'nullable|string|min:8|confirmed',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'addresses' => 'required|array',
             'addresses.*.country' => 'required|string|max:255',
-            'addresses.*.city'    => 'required|string|max:255',
+            'addresses.*.city' => 'required|string|max:255',
             'addresses.*.address' => 'required|string|max:255',
         ];
     }
