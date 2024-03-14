@@ -25,7 +25,7 @@
                                     <td>
                                         {{-- restore --}}
                                         <form action="{{ route(config('theme.rprefix') . '.restore', $item->id) }}"
-                                            method="post">
+                                            class="d-inline" method="post">
                                             @csrf
                                             <button title="{{ __('Restore') }}" type="submit"
                                                 onclick="return confirm('Are you sure to restore?')"

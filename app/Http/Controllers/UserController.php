@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserProfileUpdateRequest;
-use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Events\UserSaved;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         config_set('theme', [
-            'title' => 'User List',
-            'rprefix' => 'user',
+            'title'      => 'User List',
+            'rprefix'    => 'user',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -34,7 +35,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(): \Illuminate\Contracts\View\View
+    public function index() : \Illuminate\Contracts\View\View
     {
         // get user list
         $collection = User::paginate(20);
@@ -47,10 +48,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(): \Illuminate\Contracts\View\View
+    public function create() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Create User',
+            'title'      => 'Create User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -83,8 +84,8 @@ class UserController extends Controller
         }
         // create user
         $user = User::create($request->all());
-        // sync addresses
-        $user->addresses()->createMany($request->addresses);
+        // fire event
+        event(new UserSaved($user, $request->addresses));
         // success session
         session()->flash('success', __('User created successfully'));
 
@@ -97,10 +98,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(User $user): \Illuminate\Contracts\View\View
+    public function show(User $user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'User Detail',
+            'title'      => 'User Detail',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -125,10 +126,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(User $user): \Illuminate\Contracts\View\View
+    public function edit(User $user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Edit User',
+            'title'      => 'Edit User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -169,9 +170,8 @@ class UserController extends Controller
         }
         // update user
         $user->update($request->all());
-        // sync addresses
-        $user->addresses()->delete();
-        $user->addresses()->createMany($request->addresses);
+        // fire event
+        event(new UserSaved($user, $request->addresses));
         // success session
         session()->flash('success', __('User updated successfully'));
 
@@ -201,7 +201,8 @@ class UserController extends Controller
             }
             // delete user
             $user->forceDelete();
-        } else {
+        }
+        else {
             $user = User::find($user);
             // soft delete user
             $user->delete();
@@ -219,10 +220,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function trash(): \Illuminate\Contracts\View\View
+    public function trash() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'User Trash List',
+            'title'      => 'User Trash List',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -263,10 +264,10 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function profile(): \Illuminate\Contracts\View\View
+    public function profile() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Profile',
+            'title'      => 'Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -287,10 +288,10 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function editProfile(): \Illuminate\Contracts\View\View
+    public function editProfile() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Edit Profile',
+            'title'      => 'Edit Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
