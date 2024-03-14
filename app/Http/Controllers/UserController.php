@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Events\UserSaved;
 use Illuminate\Http\Request;
+use App\Interface\UserServiceInterface;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -12,7 +11,8 @@ use App\Http\Requests\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $userService;
+    public function __construct(UserServiceInterface $userService)
     {
         config_set('theme', [
             'title'      => 'User List',
@@ -28,6 +28,7 @@ class UserController extends Controller
                 ],
             ],
         ]);
+        $this->userService = $userService;
     }
 
     /**
@@ -38,8 +39,7 @@ class UserController extends Controller
     public function index() : \Illuminate\Contracts\View\View
     {
         // get user list
-        $collection = User::paginate(20);
-
+        $collection = $this->userService->paginate(20);
         return view('user.index', compact('collection'));
     }
 
@@ -83,9 +83,7 @@ class UserController extends Controller
             $request['profile_photo_path'] = $request->avatar->store('users');
         }
         // create user
-        $user = User::create($request->all());
-        // fire event
-        event(new UserSaved($user, $request->addresses));
+        $this->userService->store($request->all());
         // success session
         session()->flash('success', __('User created successfully'));
 
@@ -98,7 +96,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(User $user) : \Illuminate\Contracts\View\View
+    public function show($user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'User Detail',
@@ -117,7 +115,7 @@ class UserController extends Controller
                 ],
             ],
         ]);
-
+        $user = $this->userService->findOrFail($user);
         return view('user.show')->with('item', $user);
     }
 
@@ -126,7 +124,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(User $user) : \Illuminate\Contracts\View\View
+    public function edit($user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'Edit User',
@@ -145,7 +143,7 @@ class UserController extends Controller
                 ],
             ],
         ]);
-
+        $user = $this->userService->findOrFail($user);
         return view('user.create_edit')->with('item', $user);
     }
 
@@ -154,7 +152,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, $user)
     {
         // check if avatar has file
         if ($request->hasFile('avatar')) {
@@ -169,9 +167,7 @@ class UserController extends Controller
             $request->request->remove('password');
         }
         // update user
-        $user->update($request->all());
-        // fire event
-        event(new UserSaved($user, $request->addresses));
+        $this->userService->update($user, $request->all());
         // success session
         session()->flash('success', __('User updated successfully'));
 
@@ -194,18 +190,12 @@ class UserController extends Controller
         }
 
         if ($request->has('force_delete')) {
-            $user = User::withTrashed()->find($user);
-            // check profile photo
-            if ($user->profile_photo_path) {
-                Storage::delete($user->profile_photo_path);
-            }
-            // delete user
-            $user->forceDelete();
+            // force delete user
+            $this->userService->forceDelete($user);
         }
         else {
-            $user = User::find($user);
-            // soft delete user
-            $user->delete();
+            // delete user
+            $this->userService->delete($user);
         }
 
         // success session
@@ -240,7 +230,7 @@ class UserController extends Controller
             ],
         ]);
 
-        $collection = User::onlyTrashed()->paginate(20);
+        $collection = $this->userService->onlyTrashedPaginate(20);
 
         return view('user.trash', compact('collection'));
     }
@@ -253,7 +243,8 @@ class UserController extends Controller
      */
     public function restore($user)
     {
-        User::withTrashed()->find($user)->restore();
+        // restore user
+        $this->userService->restore($user);
         session()->flash('success', __('User restored successfully'));
 
         return redirect(route('user.index'));
@@ -332,10 +323,7 @@ class UserController extends Controller
             $request->request->remove('password');
         }
         // update user
-        auth()->user()->update($request->all());
-        // sync addresses
-        auth()->user()->addresses()->delete();
-        auth()->user()->addresses()->createMany($request->addresses);
+        $this->userService->update(auth()->user(), $request->all());
         // success session
         session()->flash('success', __('User updated successfully'));
 
