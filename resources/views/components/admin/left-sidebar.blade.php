@@ -9,13 +9,10 @@
         <!--/.sidebar header-->
         <div class="profile-element d-block align-items-center flex-shrink-0">
             <div class="avatar online mb-2">
-                {{-- <img src="{{ auth()->user()->profile_photo_url }}" class="img-fluid rounded-circle"> --}}
+                <img src="{{ auth()->user()->profile_photo_url }}" class="img-fluid rounded-circle">
             </div>
             <div class="profile-text text-center">
-                {{-- <h6 class="m-0">{{ auth()->user()->name }}</h6> --}}
-                <span class="text-muted">
-                    <i class="typcn typcn-media-record text-success"></i>
-                </span>
+                <h6 class="m-0">{{ auth()->user()->name }}</h6>
             </div>
         </div>
 
@@ -23,33 +20,20 @@
         <div class="sidebar-body">
             <nav class="sidebar-nav">
                 <ul class="metismenu">
-                    <x-admin.nav-link>
-                        <i class="typcn typcn-home-outline"></i>
-                        {{ __('Dashboard') }}
-                    </x-admin.nav-link>
-                    {{-- <x-admin.multi-nav>
-                            <x-slot name="title">
-                                <i class="material-icons">message</i> {{ __('Chat Board') }}
-                            </x-slot>
-                            @if (can('chat_read') || can('chat_read_all'))
-                                <x-admin.nav-link href="{{ route('admin.chat.index') }}">
-                                    {{ __('Chats') }}
-                                </x-admin.nav-link>
-                            @endif
-                            @if (can('chat_setting'))
-                                <x-admin.nav-link href="{{ route('admin.chat.setting') }}">
-                                    {{ __('Setting') }}
-                                </x-admin.nav-link>
-                            @endif
-                            @if (can('chat_init_widget'))
-                                <x-admin.nav-link href="{{ route('admin.chat.widget-init') }}">
-                                    {{ __('Init Widget') }}
-                                </x-admin.nav-link>
-                                <x-admin.nav-link href="{{ route('admin.chat.widget-test') }}" target="_blank">
-                                    {{ __('Test Widget') }}
-                                </x-admin.nav-link>
-                            @endif
-                        </x-admin.multi-nav> --}}
+                    <x-admin.multi-nav>
+                        <x-slot name="title">
+                            <i class="typcn typcn-group"></i> {{ __('Users Mangment') }}
+                        </x-slot>
+                        <x-admin.nav-link href="{{ route('user.index') }}">
+                            {{ __('User List') }}
+                        </x-admin.nav-link>
+                        <x-admin.nav-link href="{{ route('user.trash') }}">
+                            {{ __('User Trash List') }}
+                        </x-admin.nav-link>
+                        <x-admin.nav-link href="{{ route('user.create') }}">
+                            {{ __('Create User') }}
+                        </x-admin.nav-link>
+                    </x-admin.multi-nav>
                 </ul>
             </nav>
             <div class="mt-auto p-3 sidebar-logout">

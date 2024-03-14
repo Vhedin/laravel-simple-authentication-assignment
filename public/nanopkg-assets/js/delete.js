@@ -43,11 +43,11 @@ $(document).ready(function () {
                         callback();
                     } else {
                         var table = $("#page-axios-data").data("table-id");
-                        if (table !== null) {
+                        if (table && table !== null) {
                             try {
                                 $(table).DataTable().ajax.reload(null, false);
                             } catch (e) {
-                                console.log(e);
+                                // console.log(e);
                             }
                         } else {
                             location.reload();

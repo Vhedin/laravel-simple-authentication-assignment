@@ -24,11 +24,11 @@
                         <span>{{ auth()->user()->email }}</span>
                     </div>
                     <!-- user-header -->
-                    <a href="{{ route('user-profile-information.index') }}" class="dropdown-item">
+                    <a href="{{ route('user.profile') }}" class="dropdown-item">
                         <i class="typcn typcn-user-outline"></i>
                         {{ __('My Profile') }}
                     </a>
-                    <a href="{{ route('user-profile-information.edit') }}" class="dropdown-item">
+                    <a href="{{ route('user.profile.edit') }}" class="dropdown-item">
                         <i class="typcn typcn-edit"></i>
                         {{ __('Edit Profile') }}
                     </a>

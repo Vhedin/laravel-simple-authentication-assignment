@@ -31,4 +31,4 @@
         <input type="hidden" id="session_error{{ $key }}" value="{{ ucwords($error) }}">
     @endforeach
 @endif
-<script src="{{ nanopkg_asset('js/tosterSession.min.js') }}"></script>
+<script src="{{ asset('nanopkg-assets/js/tosterSession.min.js') }}"></script>
