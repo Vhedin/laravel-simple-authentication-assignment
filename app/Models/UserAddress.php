@@ -11,6 +11,7 @@ class UserAddress extends Model
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array<int, string>
      */
     protected $fillable = [
@@ -21,9 +22,8 @@ class UserAddress extends Model
 
     /**
      * Get the user that owns the address.
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

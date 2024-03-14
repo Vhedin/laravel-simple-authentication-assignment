@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserProfileUpdateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Http\Requests\UserProfileUpdateRequest;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         config_set('theme', [
-            'title'      => 'User List',
-            'rprefix'    => 'user',
+            'title' => 'User List',
+            'rprefix' => 'user',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -26,30 +25,32 @@ class UserController extends Controller
                     'name' => 'User List',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
     }
 
     /**
      * Showing User List
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index() : \Illuminate\Contracts\View\View
+    public function index(): \Illuminate\Contracts\View\View
     {
         // get user list
         $collection = User::paginate(20);
+
         return view('user.index', compact('collection'));
     }
 
-
     /**
      * Showing User Create Form
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create() : \Illuminate\Contracts\View\View
+    public function create(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Create User',
+            'title' => 'Create User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -63,15 +64,15 @@ class UserController extends Controller
                     'name' => 'Create User',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
+
         return view('user.create_edit');
     }
 
-
     /**
      * Store a newly created user
-     * @param \App\Http\Requests\UserCreateRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(UserCreateRequest $request)
@@ -86,19 +87,20 @@ class UserController extends Controller
         $user->addresses()->createMany($request->addresses);
         // success session
         session()->flash('success', __('User created successfully'));
+
         // redirect to user list
         return redirect(route('user.index'));
     }
 
     /**
      * Show the specified user
-     * @param \App\Models\User $user
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(User $user) : \Illuminate\Contracts\View\View
+    public function show(User $user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'User Detail',
+            'title' => 'User Detail',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -112,21 +114,21 @@ class UserController extends Controller
                     'name' => 'User Detail',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
+
         return view('user.show')->with('item', $user);
     }
 
-
     /**
      * Show the form for editing the specified user
-     * @param \App\Models\User $user
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(User $user) : \Illuminate\Contracts\View\View
+    public function edit(User $user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Edit User',
+            'title' => 'Edit User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -140,15 +142,15 @@ class UserController extends Controller
                     'name' => 'Edit User',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
+
         return view('user.create_edit')->with('item', $user);
     }
 
     /**
      * Update the specified user
-     * @param \App\Http\Requests\UserUpdateRequest $request
-     * @param \App\Models\User $user
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -172,20 +174,22 @@ class UserController extends Controller
         $user->addresses()->createMany($request->addresses);
         // success session
         session()->flash('success', __('User updated successfully'));
+
         // redirect to user list
         return redirect(route('user.index'));
     }
 
-
     /**
      * Remove the specified user
-     * @param \App\Models\User $user
+     *
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $user)
     {
         if (auth()->user()->id == $user) {
             session()->flash('error', __('You can\'t delete your account'));
+
             return response()->error('', __('You can\'t delete your account'), 403);
         }
 
@@ -197,8 +201,7 @@ class UserController extends Controller
             }
             // delete user
             $user->forceDelete();
-        }
-        else {
+        } else {
             $user = User::find($user);
             // soft delete user
             $user->delete();
@@ -206,18 +209,20 @@ class UserController extends Controller
 
         // success session
         session()->flash('success', __('User deleted successfully'));
+
         // redirect to user list
         return response()->success('', __('Successfully deleted user account'), 200);
     }
 
     /**
      * Display a listing of the trashed users
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function trash() : \Illuminate\Contracts\View\View
+    public function trash(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'User Trash List',
+            'title' => 'User Trash List',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -231,35 +236,37 @@ class UserController extends Controller
                     'name' => 'User Trash List',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
 
         $collection = User::onlyTrashed()->paginate(20);
+
         return view('user.trash', compact('collection'));
     }
 
     /**
      * Restore the specified user
-     * @param \App\Models\User $user
+     *
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function restore($user)
     {
         User::withTrashed()->find($user)->restore();
         session()->flash('success', __('User restored successfully'));
+
         return redirect(route('user.index'));
     }
 
-
-
     /**
      * Show the form for editing the profile
+     *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function profile() : \Illuminate\Contracts\View\View
+    public function profile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Profile',
+            'title' => 'Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -269,19 +276,21 @@ class UserController extends Controller
                     'name' => 'Profile',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
+
         return view('user.show')->with('item', auth()->user());
     }
 
     /**
      * Show the form for editing the profile
+     *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function editProfile() : \Illuminate\Contracts\View\View
+    public function editProfile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Edit Profile',
+            'title' => 'Edit Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -295,14 +304,16 @@ class UserController extends Controller
                     'name' => 'Edit Profile',
                     'link' => false,
                 ],
-            ]
+            ],
         ]);
+
         return view('user.profile_edit')->with('item', auth()->user());
     }
 
     /**
      * Update the specified user profile
-     * @param \App\Http\Requests\UserUpdateRequest $request
+     *
+     * @param  \App\Http\Requests\UserUpdateRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function updateProfile(UserProfileUpdateRequest $request)
@@ -326,6 +337,7 @@ class UserController extends Controller
         auth()->user()->addresses()->createMany($request->addresses);
         // success session
         session()->flash('success', __('User updated successfully'));
+
         // redirect to user list
         return redirect(route('user.profile'));
     }

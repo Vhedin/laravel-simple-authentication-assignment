@@ -9,10 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up() : void
+    public function up(): void
     {
-        Schema::create('user_addresses', function (Blueprint $table)
-        {
+        Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('country');
@@ -25,7 +24,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down() : void
+    public function down(): void
     {
         Schema::dropIfExists('user_addresses');
     }
