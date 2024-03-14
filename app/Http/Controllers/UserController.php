@@ -7,6 +7,7 @@ use App\Http\Requests\UserProfileUpdateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Interface\UserServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -16,8 +17,8 @@ class UserController extends Controller
     public function __construct(UserServiceInterface $userService)
     {
         config_set('theme', [
-            'title' => 'User List',
-            'rprefix' => 'user',
+            'title'      => 'User List',
+            'rprefix'    => 'user',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -37,7 +38,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(): \Illuminate\Contracts\View\View
+    public function index() : \Illuminate\Contracts\View\View
     {
         // get user list
         $collection = $this->userService->paginate(20);
@@ -50,10 +51,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(): \Illuminate\Contracts\View\View
+    public function create() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Create User',
+            'title'      => 'Create User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -84,6 +85,7 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $request['profile_photo_path'] = $request->avatar->store('users');
         }
+        $request['password'] = Hash::make($request->password);
         // create user
         $this->userService->store($request->all());
         // success session
@@ -98,10 +100,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($user): \Illuminate\Contracts\View\View
+    public function show($user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'User Detail',
+            'title'      => 'User Detail',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -127,10 +129,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($user): \Illuminate\Contracts\View\View
+    public function edit($user) : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Edit User',
+            'title'      => 'Edit User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -170,6 +172,9 @@ class UserController extends Controller
         if (empty($request->password)) {
             $request->request->remove('password');
         }
+        else {
+            $request['password'] = Hash::make($request->password);
+        }
         // update user
         $this->userService->update($user, $request->all());
         // success session
@@ -196,7 +201,8 @@ class UserController extends Controller
         if ($request->has('force_delete')) {
             // force delete user
             $this->userService->forceDelete($user);
-        } else {
+        }
+        else {
             // delete user
             $this->userService->delete($user);
         }
@@ -213,10 +219,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function trash(): \Illuminate\Contracts\View\View
+    public function trash() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'User Trash List',
+            'title'      => 'User Trash List',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -258,10 +264,10 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function profile(): \Illuminate\Contracts\View\View
+    public function profile() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Profile',
+            'title'      => 'Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -282,10 +288,10 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function editProfile(): \Illuminate\Contracts\View\View
+    public function editProfile() : \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title' => 'Edit Profile',
+            'title'      => 'Edit Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',

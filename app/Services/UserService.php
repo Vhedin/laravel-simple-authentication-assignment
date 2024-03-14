@@ -50,7 +50,7 @@ class UserService implements UserServiceInterface
         // create user
         $user = User::create($data);
         // fire event
-        event(new UserSaved($user, $data['addresses']));
+        event(new UserSaved($user, $data['addresses'] ?? []));
 
         return $user;
     }
@@ -66,7 +66,7 @@ class UserService implements UserServiceInterface
         $user = $this->findOrFail($user_id);
         $user->update($data);
         // fire event
-        event(new UserSaved($user, $data['addresses']));
+        event(new UserSaved($user, $data['addresses'] ?? []));
 
         return $user;
     }
