@@ -1,0 +1,227 @@
+ .bg_viloet_one {
+     background: #674F1F;
+ }
+
+ .bg_violet_two {
+     background: #0C7E2E;
+ }
+
+ .bg_clinical {
+     background: #7D073F;
+ }
+
+ .bg_pinky {
+     background: #4C0D65;
+ }
+
+ .bg_nurse {
+     background: #8E1073;
+ }
+
+ .bg_emergency {
+     background: #830808;
+ }
+
+ .bg_green_one {
+     background: #101F84;
+ }
+
+ .bg_blue_two {
+     /*background-image: linear-gradient(to bottom, #030189, #3c4e8d) !important;*/
+     background-color: #765105;
+ }
+
+ .bg_yellow_dark {
+     background: #545406;
+ }
+
+ .bg_pink3 {
+     background: #f17c7c;
+ }
+
+ .bg_normal {
+     background: #a1a1a1;
+ }
+
+ .hovereffect::after,
+ .hovereffect::before {
+     content: "";
+     position: absolute;
+     top: 8px;
+     left: 8px;
+     right: 8px;
+     bottom: 8px;
+     transition-duration: 0.3s;
+ }
+
+ .hovereffect::before {
+     border-bottom: 1px solid #fff;
+     border-top: 1px solid #fff;
+     transform: scalex(0);
+ }
+
+ .hovereffect::after {
+     border-left: 1px solid #fff;
+     border-right: 1px solid #fff;
+     transform: scaleY(0);
+ }
+
+ .hovereffect:hover::before {
+     transform: scalex(1);
+ }
+
+ .hovereffect:hover::after {
+     transform: scaleY(1);
+ }
+
+ @media (min-width: 1600px) {
+     .col-xxl-2 {
+         -ms-flex: 0 0 16.666667%;
+         flex: 0 0 16.666667%;
+         max-width: 16.666667%;
+     }
+ }
+
+ .logo-size {
+     height: 80px;
+     width: 80px;
+ }
+
+ .qr-resize {
+     height: 150px;
+     width: 150px;
+ }
+
+ .t-space th td {
+     padding: 3px 10px !important;
+     vertical-align: middle;
+ }
+
+ .thead-bg {
+     background-color: #eeefef;
+ }
+
+ @media print {
+     .table .thead-bg {
+         background-color: #eeefef !important;
+     }
+
+     .table .thead-bg th {
+         background-color: #eeefef !important;
+     }
+
+     body {
+         background-color: #fff;
+         height: 100%;
+         padding-bottom: 20px;
+     }
+
+     .mt-50 {
+         margin-top: 50px;
+     }
+
+     #toTop {
+         display: none;
+     }
+
+     .p-r-50 {
+         padding-right: 50px;
+     }
+ }
+
+ .row-border {
+     border-top: 1px solid #000;
+     border-bottom: 1px solid #000;
+     padding: 12px 0px;
+ }
+
+ .p-b-i-a {
+     page-break-inside: avoid;
+ }
+
+ .v-align-top,
+ tr {
+     vertical-align: top;
+ }
+
+ .dashboard-grid-icon {
+     width: 84px;
+     height: 84px;
+     border-radius: 5px;
+     text-align: center;
+     font-size: 64px;
+     color: #ffff;
+ }
+
+ @media print {
+     footer {
+         position: fixed;
+         bottom: 0;
+         width: 100%;
+         left: -15px;
+     }
+
+     header {
+         position: fixed;
+         top: 0;
+         width: 100%;
+     }
+
+     #tableDataPageBreak tr:nth-child(7n+0) {
+         page-break-after: always;
+     }
+
+     .after-header {
+         position: relative;
+         top: 425px;
+     }
+
+     .after-header-sm {
+         position: relative;
+         top: 150px;
+     }
+ }
+
+ .bg-laboratory {
+     background: #417509;
+ }
+
+ .bg-sample-collection {
+     background: #087171;
+ }
+
+ .bg-hr {
+     background: #2F684B;
+ }
+
+ .bg-insurance {
+     background: #8D2626;
+ }
+
+ .bg-inventory {
+     background: #126298;
+ }
+
+ .bg-pharmacy {
+     background: #72340A;
+ }
+
+ .bg-reports {
+     background: #384A1B;
+ }
+
+ .bg-more {
+     background: #136840;
+ }
+
+ .bg-clinic-management {
+     background: #2C3135;
+ }
+
+ .bg-insurance-billing {
+     background: #7B0A61;
+ }
+
+ .bg-in-patient {
+     background: #095682;
+ }
