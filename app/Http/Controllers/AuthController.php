@@ -20,7 +20,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $credentials = $request->only('email', 'password', 'remember');
+        $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
