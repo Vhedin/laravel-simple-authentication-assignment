@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+// Auth routes
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -18,8 +20,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/', UserController::class)->parameters(['' => 'user']);
     });
 });
-
+// Guest routes
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    // Define rate limiting for the login routes
+    RateLimiter::for('login', function ($request) {
+        return Limit::perMinute(8)->by($request->ip());
+    });
+
+    // Routes for login
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login')
+        ->middleware(['throttle:login']);
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware(['throttle:login']);
 });
