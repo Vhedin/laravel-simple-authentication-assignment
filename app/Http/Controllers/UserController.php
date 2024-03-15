@@ -38,7 +38,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index() : \Illuminate\Contracts\View\View
+    public function index(): \Illuminate\Contracts\View\View
     {
         // get user list
         $collection = $this->userService->paginate(20);
@@ -51,7 +51,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create() : \Illuminate\Contracts\View\View
+    public function create(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'Create User',
@@ -100,7 +100,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($user) : \Illuminate\Contracts\View\View
+    public function show($user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'User Detail',
@@ -129,7 +129,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($user) : \Illuminate\Contracts\View\View
+    public function edit($user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'Edit User',
@@ -171,8 +171,7 @@ class UserController extends Controller
         // check if password is empty
         if (empty($request->password)) {
             $request->request->remove('password');
-        }
-        else {
+        } else {
             $request['password'] = Hash::make($request->password);
         }
         // update user
@@ -201,8 +200,7 @@ class UserController extends Controller
         if ($request->has('force_delete')) {
             // force delete user
             $this->userService->forceDelete($user);
-        }
-        else {
+        } else {
             // delete user
             $this->userService->delete($user);
         }
@@ -219,7 +217,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function trash() : \Illuminate\Contracts\View\View
+    public function trash(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'User Trash List',
@@ -264,7 +262,7 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function profile() : \Illuminate\Contracts\View\View
+    public function profile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'Profile',
@@ -288,7 +286,7 @@ class UserController extends Controller
      *
      * @return mixed|\Illuminate\Contracts\View\View
      */
-    public function editProfile() : \Illuminate\Contracts\View\View
+    public function editProfile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
             'title'      => 'Edit Profile',

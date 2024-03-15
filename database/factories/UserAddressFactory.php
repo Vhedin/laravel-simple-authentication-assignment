@@ -17,7 +17,9 @@ class UserAddressFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'country' => $this->faker->country,
+            'city' => $this->faker->city,
+            'address' => $this->faker->streetAddress,
         ];
     }
 }
