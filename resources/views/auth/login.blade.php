@@ -53,7 +53,7 @@
                     <div class="col-6">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" name="remember"
-                                id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                value="1" id="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label class="form-check-label" for="remember">{{ __('Remember me') }}</label>
                         </div>
                     </div>
