@@ -29,8 +29,7 @@ Route::group(['middleware' => 'guest'], function () {
     });
 
     // Routes for login
-    Route::get('/login', [AuthController::class, 'loginView'])->name('login')
-        ->middleware(['throttle:login']);
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])
         ->middleware(['throttle:login']);
 });
