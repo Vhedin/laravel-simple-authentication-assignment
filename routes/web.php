@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => 'guest'], function () {
     // Define rate limiting for the login routes
     RateLimiter::for('login', function ($request) {
-        return Limit::perMinute(8)->by($request->ip());
+        return Limit::perMinute(10)->by($request->ip());
     });
 
     // Routes for login
