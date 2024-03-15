@@ -2,14 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\User;
-use App\Interface\UserServiceInterface;
-use App\Http\Controllers\UserController;
-use App\Models\UserAddress;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
@@ -19,7 +14,6 @@ class UserControllerTest extends TestCase
 
     /**
      * Set up the test
-     * @return void
      */
     public function setUp(): void
     {
@@ -31,6 +25,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test User Index
+     *
      * @test
      */
     public function test_index()
@@ -50,6 +45,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Create User
+     *
      * @test
      */
     public function test_create()
@@ -65,6 +61,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Store User
+     *
      * @test
      */
     public function test_store()
@@ -80,8 +77,8 @@ class UserControllerTest extends TestCase
                     'address' => '123 Main St',
                     'city' => 'New York',
                     'country' => 'NY',
-                ]
-            ]
+                ],
+            ],
 
         ];
 
@@ -96,6 +93,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Show User
+     *
      * @test
      */
     public function test_show()
@@ -115,6 +113,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test edit User
+     *
      * @test
      */
     public function test_edit()
@@ -134,6 +133,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Update User
+     *
      * @test
      */
     public function test_update()
@@ -152,8 +152,8 @@ class UserControllerTest extends TestCase
                     'address' => '123 Main St',
                     'city' => 'New York',
                     'country' => 'NY',
-                ]
-            ]
+                ],
+            ],
         ];
 
         // Visit user update route
@@ -167,6 +167,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Delete User
+     *
      * @test
      */
     public function test_destroy()
@@ -182,9 +183,9 @@ class UserControllerTest extends TestCase
         $this->assertSoftDeleted('users', ['id' => $user->id]);
     }
 
-
     /**
      * Test Force Destroy User
+     *
      * @test
      */
     public function test_force_destroy()
@@ -202,6 +203,7 @@ class UserControllerTest extends TestCase
 
     /**
      * Test Restore User
+     *
      * @test
      */
     public function test_restore()

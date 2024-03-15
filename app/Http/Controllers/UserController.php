@@ -17,8 +17,8 @@ class UserController extends Controller
     public function __construct(UserServiceInterface $userService)
     {
         config_set('theme', [
-            'title'      => 'User List',
-            'rprefix'    => 'user',
+            'title' => 'User List',
+            'rprefix' => 'user',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -54,7 +54,7 @@ class UserController extends Controller
     public function create(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Create User',
+            'title' => 'Create User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -103,7 +103,7 @@ class UserController extends Controller
     public function show($user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'User Detail',
+            'title' => 'User Detail',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -132,7 +132,7 @@ class UserController extends Controller
     public function edit($user): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Edit User',
+            'title' => 'Edit User',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -220,7 +220,7 @@ class UserController extends Controller
     public function trash(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'User Trash List',
+            'title' => 'User Trash List',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -265,7 +265,7 @@ class UserController extends Controller
     public function profile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Profile',
+            'title' => 'Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',
@@ -289,7 +289,7 @@ class UserController extends Controller
     public function editProfile(): \Illuminate\Contracts\View\View
     {
         config_set('theme', [
-            'title'      => 'Edit Profile',
+            'title' => 'Edit Profile',
             'breadcrumb' => [
                 [
                     'name' => 'Dashboard',

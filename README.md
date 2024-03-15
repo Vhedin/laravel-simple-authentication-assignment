@@ -127,6 +127,6 @@ For further assistance or inquiries, you can reach out to:
 
 -   [My Portfolio](https://iqbalhasan.dev)
 
--   [My Blog](https://iqbalhasan.dev)
+-   [My Blog](https://iqbalhasan.com)
 
 Thank you for visiting!

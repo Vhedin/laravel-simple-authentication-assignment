@@ -1,7 +1,7 @@
 <?php
+
 namespace Tests\Unit\Services;
 
-use App\Events\UserSaved;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,9 +18,8 @@ class UserServiceTest extends TestCase
 
     /**
      * Set up the test
-     * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->userService = new UserService();
@@ -28,23 +27,25 @@ class UserServiceTest extends TestCase
 
     /**
      * Test Store User
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_store_a_user()
     {
         Event::fake();
         $data = [
-            'name'      => 'IQBAL HASAN',
-            'email'     => 'info@iqbalhasan.dev',
-            'password'  => Hash::make('password'),
+            'name' => 'IQBAL HASAN',
+            'email' => 'info@iqbalhasan.dev',
+            'password' => Hash::make('password'),
             'addresses' => [
                 [
                     'address' => '123 Main St',
-                    'city'    => 'New York',
+                    'city' => 'New York',
                     'country' => 'NY',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $user = $this->userService->store($data);
@@ -54,10 +55,11 @@ class UserServiceTest extends TestCase
         $this->assertEquals($data['email'], $user->email);
     }
 
-
     /**
      * Test Update User
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_update_a_user()
@@ -65,7 +67,7 @@ class UserServiceTest extends TestCase
         $user = User::factory()->create();
 
         $updatedData = [
-            'name'  => 'Updated Name',
+            'name' => 'Updated Name',
             'email' => 'updated@example.com',
 
         ];
@@ -78,7 +80,9 @@ class UserServiceTest extends TestCase
 
     /**
      * Test Delete User
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_delete_a_user()
@@ -93,7 +97,9 @@ class UserServiceTest extends TestCase
 
     /**
      * Test Restore User
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_restore_a_deleted_user()
@@ -109,7 +115,9 @@ class UserServiceTest extends TestCase
 
     /**
      * Test Force Delete User
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_force_delete_a_user()
@@ -130,7 +138,9 @@ class UserServiceTest extends TestCase
 
     /**
      * Test Paginate Users
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_paginate_users()
@@ -142,10 +152,11 @@ class UserServiceTest extends TestCase
         $this->assertCount(10, $users);
     }
 
-
     /**
      * Test Paginate Trashed Users
+     *
      * @test
+     *
      * @return void
      */
     public function it_can_paginate_trashed_users()
