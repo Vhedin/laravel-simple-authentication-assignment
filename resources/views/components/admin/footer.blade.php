@@ -8,10 +8,13 @@
                 </div>
             </div>
             <div class="col-md-6 text-end">
+                <!-- Komentar atau hapus blok kode berikut untuk menonaktifkan credit -->
+                <!--
                 <div class="credit">
                     @lang('Developed by') <a class="text-capitalize" href="https://iqbalhasan.dev/"
                         target="_blank">{{ __('IQBAL HASAN') }}<a>
                 </div>
+                -->
             </div>
         </div>
     </div>

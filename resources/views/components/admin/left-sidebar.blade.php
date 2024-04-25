@@ -1,9 +1,12 @@
-    <nav class="sidebar sidebar-bunker sidebar-sticky">
+<nav class="sidebar sidebar-bunker sidebar-sticky">
         <div class="sidebar-header">
+            <!-- Komentar atau hapus blok kode berikut untuk menonaktifkan logo -->
+            <!-- 
             <a href="{{ route('home') }}" class="sidebar-brand">
                 <img class="sidebar-logo-lg" src="{{ asset('admin-assets/img/logo-light.png') }}">
                 <img class="sidebar-logo-sm" src="{{ asset('admin-assets/img/favicon.png') }}">
             </a>
+            -->
         </div>
 
         <!--/.sidebar header-->
